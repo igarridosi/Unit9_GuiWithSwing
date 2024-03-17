@@ -9,14 +9,25 @@ public class Mile1 extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setPreferredSize(new Dimension(900,500));
 
-        Container panel = getContentPane();
+        //1//
 
-        panel.setLayout(new BorderLayout());
+        //Create the main container with BorderLayout
+        Container container = getContentPane();
+        container.setLayout(new BorderLayout());
 
-        panel.add(new JCheckBox("Katniss"), BorderLayout.NORTH);
-        panel.add(new JCheckBox("Peeta"), BorderLayout.SOUTH);
+        //Add a new JPanel inside the container with FLowLayout
+        JPanel northPanel = new JPanel(new FlowLayout());
 
-        //https://www.geeksforgeeks.org/java-awt-borderlayout-class/
+        //Add the panel to the North position of the container
+        container.add(northPanel, BorderLayout.NORTH);
+
+        //Add the CheckBoxes to the North Panel
+        northPanel.add(new JCheckBox("Katniss"));
+        northPanel.add(new JCheckBox("Peeta"));
+
+        //2//
+
+
 
         this.pack();
         this.setVisible(true);
