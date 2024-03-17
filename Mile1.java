@@ -49,6 +49,43 @@ public class Mile1 extends JFrame {
         container.add(eastPanel, BorderLayout.EAST);
 
 
+        //3//
+
+        JPanel southPanel = new JPanel();
+        southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.X_AXIS));
+        southPanel.setPreferredSize(new Dimension(getWidth(),50));
+        southPanel.setBackground(new Color(129,123,212));
+
+        JButton but1 = new JButton("But1");
+        JButton but2 = new JButton("But2");
+
+        southPanel.add(but1);
+        southPanel.add(but2);
+
+        container.add(southPanel, BorderLayout.SOUTH);
+
+        //4//
+
+        JPanel centerPanel = new JPanel(new GridLayout(2,2));
+
+        centerPanel.setBackground(new Color(209, 222, 87));
+
+        //Create an array of labels and images for adding to each cell of the GridLayout
+        JLabel[] labels = new JLabel[4];
+        ImageIcon[] images = new ImageIcon[4];
+
+        images[0] = new ImageIcon("E:\\WG31 Zubiri\\Programming\\Java_ex\\Unit9_GuiWithSwing\\src\\Milestone1\\katniss.jpg");
+        images[1] = new ImageIcon("E:\\WG31 Zubiri\\Programming\\Java_ex\\Unit9_GuiWithSwing\\src\\Milestone1\\katniss.jpg");
+        images[2] = new ImageIcon("E:\\WG31 Zubiri\\Programming\\Java_ex\\Unit9_GuiWithSwing\\src\\Milestone1\\katniss.jpg");
+        images[3] = new ImageIcon("E:\\WG31 Zubiri\\Programming\\Java_ex\\Unit9_GuiWithSwing\\src\\Milestone1\\katniss.jpg");
+
+        for (int i=0; i<4; i++){
+            labels[i] = new JLabel(images[i]);
+            centerPanel.add(labels[i]);
+        }
+
+        container.add(centerPanel, BorderLayout.CENTER);
+
         this.pack();
         this.setVisible(true);
     }
