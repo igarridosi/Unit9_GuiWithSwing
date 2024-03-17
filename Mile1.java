@@ -27,6 +27,26 @@ public class Mile1 extends JFrame {
 
         //2//
 
+        JPanel eastPanel = new JPanel();
+        eastPanel.setPreferredSize(new Dimension(250,getHeight()));
+        eastPanel.setBackground(new Color(149, 176, 204));
+
+        ButtonGroup bg = new ButtonGroup();
+
+        JRadioButton opt1 = new JRadioButton("OPT1");
+        opt1.setBounds(20, 30, getWidth(), getHeight());
+        eastPanel.add(opt1);
+        bg.add(opt1);
+
+        JRadioButton opt2 = new JRadioButton("OPT2");
+        eastPanel.add(opt2);
+        bg.add(opt2);
+
+        JRadioButton opt3 = new JRadioButton("OPT3");
+        eastPanel.add(opt3);
+        bg.add(opt3);
+
+        container.add(eastPanel, BorderLayout.EAST);
 
 
         this.pack();
@@ -35,6 +55,6 @@ public class Mile1 extends JFrame {
 
 
     public static void main(String[] args) {
-        Mile1 m1 = new Mile1();
+        new Mile1();
     }
 }
