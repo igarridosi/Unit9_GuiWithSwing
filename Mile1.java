@@ -29,22 +29,26 @@ public class Mile1 extends JFrame {
 
         JPanel eastPanel = new JPanel();
         eastPanel.setPreferredSize(new Dimension(250,getHeight()));
-        eastPanel.setBackground(new Color(149, 176, 204));
+        //eastPanel.setBackground(new Color(149, 176, 204));
+
+        eastPanel.setLayout(null);
 
         ButtonGroup bg = new ButtonGroup();
 
-        JRadioButton opt1 = new JRadioButton("OPT1");
-        opt1.setBounds(20, 30, getWidth(), getHeight());
-        eastPanel.add(opt1);
-        bg.add(opt1);
+        JRadioButton [] options = optionsArray(3);
 
-        JRadioButton opt2 = new JRadioButton("OPT2");
-        eastPanel.add(opt2);
-        bg.add(opt2);
+        options[0].setBounds(50, 100, 100, 15);
+        eastPanel.add(options[0]);
+        bg.add(options[0]);
+        options[0].setSelected(true);
 
-        JRadioButton opt3 = new JRadioButton("OPT3");
-        eastPanel.add(opt3);
-        bg.add(opt3);
+        options[1].setBounds(50, 150, 100, 15);
+        eastPanel.add(options[1]);
+        bg.add(options[1]);
+
+        options[2].setBounds(50, 200, 100, 15);
+        eastPanel.add(options[2]);
+        bg.add(options[2]);
 
         container.add(eastPanel, BorderLayout.EAST);
 
@@ -54,7 +58,7 @@ public class Mile1 extends JFrame {
         JPanel southPanel = new JPanel();
         southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.X_AXIS));
         southPanel.setPreferredSize(new Dimension(getWidth(),50));
-        southPanel.setBackground(new Color(129,123,212));
+        //southPanel.setBackground(new Color(129,123,212));
 
         JButton but1 = new JButton("But1");
         JButton but2 = new JButton("But2");
@@ -68,7 +72,7 @@ public class Mile1 extends JFrame {
 
         JPanel centerPanel = new JPanel(new GridLayout(2,2));
 
-        centerPanel.setBackground(new Color(209, 222, 87));
+        //centerPanel.setBackground(new Color(209, 222, 87));
 
         //Create an array of labels and images for adding to each cell of the GridLayout
         JLabel[] labels = new JLabel[4];
@@ -93,5 +97,15 @@ public class Mile1 extends JFrame {
 
     public static void main(String[] args) {
         new Mile1();
+    }
+
+    public JRadioButton[] optionsArray(int num){
+        JRadioButton [] options = new JRadioButton[num];
+
+        for (int i=0; i<num; i++){
+            options[i] = new JRadioButton("OPT"+(i+1));
+        }
+
+        return options;
     }
 }
