@@ -69,7 +69,7 @@ public class Mile2 extends JFrame implements ActionListener{
             }
         });
 
-        //Adding the action listener of the close Button
+        //Adding the action listener of the close Button.
         close.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
