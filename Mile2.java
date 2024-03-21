@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Mile2 extends JFrame implements ActionListener {
+public class Mile2 extends JFrame implements ActionListener{
     private Container container;
     private JPanel center, east;
     private JComboBox combo;
@@ -33,7 +33,7 @@ public class Mile2 extends JFrame implements ActionListener {
 
 
         //Adding comboBox and button
-        String [] files = {"python.txt", "c.txt", "java.txt"};
+        String [] files = {"python.txt", "c.txt", "java.txt", "null.txt"};
         combo = new JComboBox<>(files);
         combo.setSelectedIndex(0);
 
@@ -61,12 +61,22 @@ public class Mile2 extends JFrame implements ActionListener {
         //Adding the action listener of the ComboBox
         combo.addActionListener(this);
 
+        //Adding the action listener of the clear Button
         clear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textArea.setText("");
             }
         });
+
+        //Adding the action listener of the close Button
+        close.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
 
         this.pack();
         this.setVisible(true);
@@ -78,7 +88,7 @@ public class Mile2 extends JFrame implements ActionListener {
 
     //Action lister method for the different opt of the CBox
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e){
         String opt = (String) combo.getSelectedItem();
 
         switch (opt){
@@ -91,8 +101,10 @@ public class Mile2 extends JFrame implements ActionListener {
             case "java.txt":
                 textArea.setText("java information here...");
                 break;
+            default:
+                JOptionPane.showMessageDialog //In the case the null.txt opt is selected, a popup will appear
+                        (null, "The file in not available!","Error",JOptionPane.ERROR_MESSAGE);
         }
+
     }
-
-
 }
