@@ -1,4 +1,4 @@
-package Milestone1;
+package Milestones;
 
 import javax.swing.*;
 import java.awt.*;
