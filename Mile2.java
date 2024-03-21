@@ -61,6 +61,13 @@ public class Mile2 extends JFrame implements ActionListener {
         //Adding the action listener of the ComboBox
         combo.addActionListener(this);
 
+        clear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textArea.setText("");
+            }
+        });
+
         this.pack();
         this.setVisible(true);
     }
