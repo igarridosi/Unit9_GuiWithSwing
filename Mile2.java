@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Mile2 extends JFrame implements ActionListener{
     private Container container;
@@ -22,11 +24,11 @@ public class Mile2 extends JFrame implements ActionListener{
 
         //Adding the panels of the container
         center = new JPanel(new FlowLayout());
-        center.setBackground(new Color(243));
+        //center.setBackground(new Color(243));
 
         east = new JPanel();
         east.setLayout(new BoxLayout(east, BoxLayout.Y_AXIS));
-        east.setBackground(new Color(0x34DA2E));
+        //east.setBackground(new Color(0x34DA2E));
 
         container.add(center, BorderLayout.CENTER);
         container.add(east, BorderLayout.EAST);
@@ -36,6 +38,7 @@ public class Mile2 extends JFrame implements ActionListener{
         String [] files = {"python.txt", "c.txt", "java.txt", "null.txt"};
         combo = new JComboBox<>(files);
         combo.setSelectedIndex(0);
+        combo.setSize(100,30);
 
         center.add(combo);
 
@@ -69,14 +72,8 @@ public class Mile2 extends JFrame implements ActionListener{
             }
         });
 
-        //Adding the action listener of the close Button
-        close.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
-
+        //Adding the mouse listener of the close Button
+        close.addMouseListener(new ButtonListener());
 
         this.pack();
         this.setVisible(true);
@@ -103,8 +100,16 @@ public class Mile2 extends JFrame implements ActionListener{
                 break;
             default:
                 JOptionPane.showMessageDialog //In the case the null.txt opt is selected, a popup will appear
-                        (null, "The file in not available!","Error",JOptionPane.ERROR_MESSAGE);
+                        (null, "The file is not available!","Error",JOptionPane.ERROR_MESSAGE);
         }
 
+    }
+
+    //Mouse listener
+    public class ButtonListener extends MouseAdapter {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            System.exit(0);
+        }
     }
 }
