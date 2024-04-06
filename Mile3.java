@@ -9,12 +9,12 @@ import java.util.Arrays;
 public class Mile3 extends JFrame{
     private Container container;
     private JPanel panel;
-    private JLabel label;
+    private JLabel imageLabel;
     private JComboBox combo;
-    private ImageIcon imageIcon;
     private JCheckBox checkBox;
     private JTextField textField;
     private JButton saveButton;
+    private ImageIcon[] imageIcons;
 
     public Mile3(){
         super("Load Image");
@@ -62,20 +62,22 @@ public class Mile3 extends JFrame{
         panel.add(combo);
         System.out.println(combo.getSelectedIndex());
 
-        ComboListener comboListener = new ComboListener(combo, panel);
+        imageIcons = new ImageIcon[]{
+                new ImageIcon("E:\\WG31 Zubiri\\Programming\\Java_ex\\Unit9_GuiWithSwing\\src\\Milestones\\Mile3_images\\dragon.jpg"),
+                new ImageIcon("E:\\WG31 Zubiri\\Programming\\Java_ex\\Unit9_GuiWithSwing\\src\\Milestones\\Mile3_images\\garden.jpg"),
+                new ImageIcon("E:\\WG31 Zubiri\\Programming\\Java_ex\\Unit9_GuiWithSwing\\src\\Milestones\\Mile3_images\\shop.jpg")
+        };
+
+        imageLabel = new JLabel(imageIcons[0]);
+        imageLabel.setBounds(20, 100, 200, 200);
+        panel.add(imageLabel);
+
+        ComboListener comboListener = new ComboListener(combo, panel, imageLabel, imageIcons);
         combo.addActionListener(comboListener);
 
 
-
-
-
-
-
-
-
-
         //Add check box
-        checkBox = new JCheckBox("Save your comment");
+        checkBox = new JCheckBox("Save your comment", true);
         checkBox.setBounds(50, 300, 200,50);
         checkBox.isSelected();
         panel.add(checkBox);
@@ -97,4 +99,5 @@ public class Mile3 extends JFrame{
     public static void main(String[] args) {
         new Mile3();
     }
+    
 }
