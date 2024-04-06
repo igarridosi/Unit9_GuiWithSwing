@@ -62,7 +62,8 @@ public class Mile3 extends JFrame{
         panel.add(combo);
         System.out.println(combo.getSelectedIndex());
 
-
+        ComboListener comboListener = new ComboListener(combo, panel);
+        combo.addActionListener(comboListener);
 
 
 
@@ -95,29 +96,5 @@ public class Mile3 extends JFrame{
 
     public static void main(String[] args) {
         new Mile3();
-    }
-
-    public void load_combo(){
-        int selectedIndex = combo.getSelectedIndex();
-
-        //Load the image based on the selected index
-        ImageIcon imageIcon;
-        switch (selectedIndex) {
-            case 0:
-                imageIcon = new ImageIcon("Mile3_images/dragon.jpg");
-                break;
-            case 1:
-                imageIcon = new ImageIcon("Mile3_images/garden.jpg");
-                break;
-            case 2:
-                imageIcon = new ImageIcon("Mile3_images/shop.jpg");
-                break;
-            default:
-                imageIcon = null;
-        }
-
-        if (imageIcon != null) {
-            panel.add(new JLabel(imageIcon));
-        }
     }
 }
