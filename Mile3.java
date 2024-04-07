@@ -2,12 +2,13 @@ package Milestones;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 
-public class Mile3 extends JFrame{
-    private Container container;
+public class Mile3 extends JFrame implements ActionListener {
     private JPanel panel;
     private JLabel imageLabel;
     private JComboBox combo;
@@ -23,9 +24,9 @@ public class Mile3 extends JFrame{
 
         this.setLayout(null);
         panel = (JPanel) this.getContentPane();
+        addWindowListener( new AreYouSure() );
 
         //Password check
-        /*
         JPasswordField passwordField = new JPasswordField();
         Object[] message = {"Enter Password:", passwordField};
 
@@ -48,8 +49,6 @@ public class Mile3 extends JFrame{
             System.exit(0);
         }
 
-         */
-
         //DESIGN OF THE WINDOW
 
         //Add the ComboBox
@@ -60,12 +59,12 @@ public class Mile3 extends JFrame{
         combo.setBounds(20, 20, 200, 45);
 
         panel.add(combo);
-        System.out.println(combo.getSelectedIndex());
+        //System.out.println(combo.getSelectedIndex());
 
         imageIcons = new ImageIcon[]{
-                new ImageIcon("E:\\WG31 Zubiri\\Programming\\Java_ex\\Unit9_GuiWithSwing\\src\\Milestones\\Mile3_images\\dragon.jpg"),
-                new ImageIcon("E:\\WG31 Zubiri\\Programming\\Java_ex\\Unit9_GuiWithSwing\\src\\Milestones\\Mile3_images\\garden.jpg"),
-                new ImageIcon("E:\\WG31 Zubiri\\Programming\\Java_ex\\Unit9_GuiWithSwing\\src\\Milestones\\Mile3_images\\shop.jpg")
+                new ImageIcon(new ImageIcon("E:\\WG31 Zubiri\\Programming\\Java_ex\\Unit9_GuiWithSwing\\src\\Milestones\\Mile3_images\\dragon.jpg").getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT)),
+                new ImageIcon(new ImageIcon("E:\\WG31 Zubiri\\Programming\\Java_ex\\Unit9_GuiWithSwing\\src\\Milestones\\Mile3_images\\garden.jpg").getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT)),
+                new ImageIcon(new ImageIcon("E:\\WG31 Zubiri\\Programming\\Java_ex\\Unit9_GuiWithSwing\\src\\Milestones\\Mile3_images\\shop.jpg").getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT))
         };
 
         imageLabel = new JLabel(imageIcons[0]);
@@ -92,12 +91,50 @@ public class Mile3 extends JFrame{
         saveButton.setBounds(200, 400, 100, 40);
         panel.add(saveButton);
 
+        saveButton.addActionListener(this);
+
         this.setVisible(true);
         this.pack();
+    }
+    //Closing action
+    public class AreYouSure extends WindowAdapter {
+        public void windowClosing( WindowEvent e ) {
+            JOptionPane.showMessageDialog
+                    (null, "Bye","Input",JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     public static void main(String[] args) {
         new Mile3();
     }
-    
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String fileName = "E:\\WG31 Zubiri\\Programming\\Java_ex\\Unit9_GuiWithSwing\\src\\Milestones\\Buffer Files\\milestone3.txt";
+        String imageName = imageLabel.getName();
+
+        if (checkBox.isSelected()){
+            BufferedWriter bw = null;
+            String nextLine = "\n";
+            try {
+                bw = new BufferedWriter(new FileWriter(fileName, true));
+
+                bw.append(nextLine);
+                bw.append(imageName).append(" ").append(textField.getText());
+
+                if (bw!=null){
+                    bw.close();
+                }
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            JOptionPane.showMessageDialog
+                    (null, "Your comment has been saved successfully!","Input",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else {
+            JOptionPane.showMessageDialog
+                    (null, "Your comment will not be saved!","Alert",JOptionPane.WARNING_MESSAGE);
+        }
+
+    }
 }

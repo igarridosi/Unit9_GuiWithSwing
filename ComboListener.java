@@ -26,6 +26,8 @@ public class ComboListener implements ActionListener {
 
         ImageIcon selectedIcon = imageIcons[selectedIndex];
         imageLabel.setIcon(selectedIcon);
+        //Getting the name of the images (not working)
+        System.out.println(imageLabel.getName());
         panel.add(imageLabel);
 
     }
