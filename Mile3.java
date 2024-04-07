@@ -114,7 +114,7 @@ public class Mile3 extends JFrame implements ActionListener {
         String imageName = imageLabel.getName();
 
         if (checkBox.isSelected()){
-            BufferedWriter bw = null;
+            BufferedWriter bw;
             String nextLine = "\n";
             try {
                 bw = new BufferedWriter(new FileWriter(fileName, true));
