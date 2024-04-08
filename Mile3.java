@@ -24,7 +24,7 @@ public class Mile3 extends JFrame implements ActionListener {
 
         this.setLayout(null);
         panel = (JPanel) this.getContentPane();
-        addWindowListener( new AreYouSure() );
+        addWindowListener( new closeMessage() );
 
         //Password check
         JPasswordField passwordField = new JPasswordField();
@@ -97,7 +97,7 @@ public class Mile3 extends JFrame implements ActionListener {
         this.pack();
     }
     //Closing action
-    public class AreYouSure extends WindowAdapter {
+    public class closeMessage extends WindowAdapter {
         public void windowClosing( WindowEvent e ) {
             JOptionPane.showMessageDialog
                     (null, "Bye","Input",JOptionPane.INFORMATION_MESSAGE);
