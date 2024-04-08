@@ -62,9 +62,9 @@ public class Mile3 extends JFrame implements ActionListener {
         //System.out.println(combo.getSelectedIndex());
 
         imageIcons = new ImageIcon[]{
-                new ImageIcon(new ImageIcon("E:\\WG31 Zubiri\\Programming\\Java_ex\\Unit9_GuiWithSwing\\src\\Milestones\\Mile3_images\\dragon.jpg").getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT)),
-                new ImageIcon(new ImageIcon("E:\\WG31 Zubiri\\Programming\\Java_ex\\Unit9_GuiWithSwing\\src\\Milestones\\Mile3_images\\garden.jpg").getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT)),
-                new ImageIcon(new ImageIcon("E:\\WG31 Zubiri\\Programming\\Java_ex\\Unit9_GuiWithSwing\\src\\Milestones\\Mile3_images\\shop.jpg").getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT))
+                new ImageIcon(new ImageIcon("Mile3_images/dragon.jpg").getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT)),
+                new ImageIcon(new ImageIcon("Mile3_images/garden.jpg").getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT)),
+                new ImageIcon(new ImageIcon("Mile3_images/shop.jpg").getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT))
         };
 
         imageLabel = new JLabel(imageIcons[0]);
@@ -110,7 +110,7 @@ public class Mile3 extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String fileName = "E:\\WG31 Zubiri\\Programming\\Java_ex\\Unit9_GuiWithSwing\\src\\Milestones\\Buffer Files\\milestone3.txt";
+        String fileName = "Buffer_Files/milestone3.txt";
         String imageName = imageLabel.getName();
 
         if (checkBox.isSelected()){
