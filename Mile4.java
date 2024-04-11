@@ -5,11 +5,11 @@ import java.awt.*;
 
 public class Mile4 extends JFrame {
     private Container container;
-    private JPanel panel1, panel2;
+    private JPanel panel1, panel2, panel3, panel4;
     private JComboBox<String> combo;
     private JList<String> jList;
     private JScrollPane scroll1;
-    private JLabel label1, label2;
+    private JLabel label1, label2, imageLabel;
     private ImageIcon icon;
     public Mile4(){
         super("Photography");
@@ -32,8 +32,16 @@ public class Mile4 extends JFrame {
         panel1.add(combo);
         container.add(panel1);
 
-        //Adding JList to panel2
+        //Adding the Date box to panel2
         panel2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        label2 = new JLabel("Photos after ");
+
+        panel2.add(label2);
+        container.add(panel2);
+
+        //Adding JList to panel3
+        panel3 = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         String[] dataList = {"Bellet", "Sunsel"};
         jList = new JList<>(dataList);
@@ -46,8 +54,18 @@ public class Mile4 extends JFrame {
         scroll1.setBounds(10,10,100, 100);
         scroll1.setViewportView(jList);
 
-        panel2.add(scroll1);
-        container.add(panel2);
+        panel3.add(scroll1);
+        container.add(panel3);
+
+        //Adding the JLabel with the ImageIcon to panel4
+        panel4 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        imageLabel = new JLabel();
+        icon = new ImageIcon("Mile4_Images/vangogh1.jpg");
+        imageLabel.setIcon(icon);
+
+        panel4.add(imageLabel);
+        container.add(panel4);
 
 
         this.pack();
