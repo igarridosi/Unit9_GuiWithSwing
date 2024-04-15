@@ -1,8 +1,11 @@
 package Milestones;
 
+import org.jdesktop.swingx.JXDatePicker;
+
 import javax.swing.*;
 import java.awt.*;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 public class Mile4 extends JFrame {
     private Container container;
     private JPanel panel1, panel2, panel3, panel4;
@@ -11,6 +14,8 @@ public class Mile4 extends JFrame {
     private JScrollPane scroll1;
     private JLabel label1, label2, imageLabel;
     private ImageIcon icon;
+    private JXDatePicker datePicker;
+
     public Mile4(){
         super("Photography");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -30,7 +35,6 @@ public class Mile4 extends JFrame {
 
         panel1.add(label1);
         panel1.add(combo);
-        container.add(panel1);
 
         //Adding the Date box to panel2
         panel2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -38,13 +42,11 @@ public class Mile4 extends JFrame {
         label2 = new JLabel("Photos after ");
 
         panel2.add(label2);
-        container.add(panel2);
 
         //Adding JList to panel3
         panel3 = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-        String[] dataList = {"Bellet", "Sunsel"};
-        jList = new JList<>(dataList);
+        jList = new JList<>();
         jList.setPreferredSize(new Dimension(350, 200));
 
         //Adding the scroll bar to the JList
@@ -55,7 +57,6 @@ public class Mile4 extends JFrame {
         scroll1.setViewportView(jList);
 
         panel3.add(scroll1);
-        container.add(panel3);
 
         //Adding the JLabel with the ImageIcon to panel4
         panel4 = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -65,8 +66,16 @@ public class Mile4 extends JFrame {
         imageLabel.setIcon(icon);
 
         panel4.add(imageLabel);
-        container.add(panel4);
 
+        datePicker = new JXDatePicker();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        panel2.add(datePicker);
+
+        //Adding panels to the container
+        container.add(panel1);
+        container.add(panel2);
+        container.add(panel3);
+        container.add(panel4);
 
         this.pack();
         this.setVisible(true);
