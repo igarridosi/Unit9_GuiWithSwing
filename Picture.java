@@ -2,15 +2,17 @@ package Milestones;
 
 import org.jdesktop.swingx.JXDatePicker;
 
+import java.util.Date;
+
 public class Picture {
     private int pictureId;
     private String title;
-    private JXDatePicker date;
+    private Date date;
     private String file;
     private int visits;
     private int photographerId;
 
-    public Picture(int pictureId, String title, JXDatePicker date, String file, int visits, int photographerId) {
+    public Picture(int pictureId, String title, Date date, String file, int visits, int photographerId) {
         this.pictureId = pictureId;
         this.title = title;
         this.date = date;
@@ -27,7 +29,7 @@ public class Picture {
         return title;
     }
 
-    public JXDatePicker getDate() {
+    public Date getDate() {
         return date;
     }
 

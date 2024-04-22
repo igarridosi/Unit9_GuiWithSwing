@@ -4,8 +4,12 @@ import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
 public class Mile4 extends JFrame {
     private Container container;
     private JPanel panel1, panel2, panel3, panel4;
@@ -15,7 +19,7 @@ public class Mile4 extends JFrame {
     private JLabel label1, label2, imageLabel;
     private ImageIcon icon;
     private JXDatePicker datePicker;
-
+    private Mile4DB db = new Mile4DB();
     public Mile4(){
         super("Photography");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -29,9 +33,21 @@ public class Mile4 extends JFrame {
 
         label1 = new JLabel("Photographer: ");
 
-        String[] array = {"Name1", "Name2", "Name3"};
-        combo = new JComboBox<>(array);
+        String [] photographerNames = photographerNames();
+
+        combo = new JComboBox<>(photographerNames);
         combo.setSize(100, 40);
+
+        //Listener for changing the values of the jList
+        combo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                int index = combo.getSelectedIndex();
+                String [] pictureNames = pictureNames(index);
+                jList.setListData(pictureNames);
+
+            }
+        });
 
         panel1.add(label1);
         panel1.add(combo);
@@ -49,6 +65,7 @@ public class Mile4 extends JFrame {
         jList = new JList<>();
         jList.setPreferredSize(new Dimension(350, 200));
 
+
         //Adding the scroll bar to the JList
         scroll1 = new JScrollPane();
 
@@ -57,6 +74,8 @@ public class Mile4 extends JFrame {
         scroll1.setViewportView(jList);
 
         panel3.add(scroll1);
+
+
 
         //Adding the JLabel with the ImageIcon to panel4
         panel4 = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -83,5 +102,51 @@ public class Mile4 extends JFrame {
 
     public static void main(String[] args) {
         new Mile4();
+    }
+
+    public String[] photographerNames(){
+        List<Photographer> photographerList = db.photographerList();
+        String [] photographerNames = new String[photographerList.size()];
+
+        int i = 0;
+        for (Photographer photographer : photographerList){
+            //System.out.println(photographer.getName());
+            photographerNames[i] = photographer.getName();
+            i++;
+        }
+
+        return photographerNames;
+    }
+
+    public Photographer selectedPhotographer(int selectedIndex){
+        String [] photographersNames = photographerNames();
+
+        List<Photographer> photographerList = db.photographerList();
+
+        for (Photographer photographer: photographerList){
+            if(photographer.getName().equals(photographersNames[selectedIndex])){
+                return photographer;
+            }
+        }
+
+        return null;
+    }
+
+    public String[] pictureNames(int selectedIndex){
+        Photographer photographer = selectedPhotographer(selectedIndex);
+
+        List<Picture> pictureList = db.pictureList();
+
+        String [] pictureNames = new String[pictureList.size()];
+
+        int i=0;
+        for (Picture picture : pictureList){
+            if (picture.getPhotographerId() == photographer.getId()){
+                pictureNames[i] = picture.getTitle();
+            }
+            i++;
+        }
+
+        return pictureNames;
     }
 }
