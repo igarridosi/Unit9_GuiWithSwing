@@ -23,7 +23,7 @@ public class Mile4DB {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
     }
+
+
 }
