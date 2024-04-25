@@ -56,7 +56,8 @@ public class Mile4 extends JFrame{
 ////////////JList Title////////////////////////////
 
         //Adding JList to panel3
-        panel3 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panel3 = new JPanel();
+        panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
 
         jList = new JList<>();
         jList.setPreferredSize(new Dimension(350, 200));
@@ -86,32 +87,34 @@ public class Mile4 extends JFrame{
         //Adding the JLabel with the ImageIcon to panel4
         panel4 = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-        imageLabel = new JLabel();
-        icon = new ImageIcon("Mile4_Images/vangogh1.jpg");
-        imageLabel.setIcon(icon);
 
-        /*
-        int index = combo.getSelectedIndex();
-        String[] picturePath = picturePath(index);
-
-        Photographer p1 = selectedPhotographer(index);
-        Picture picture1 =
-        if (p1.)
-
-         */
         final String[] selectedTitle = {" "};
+        imageLabel = new JLabel();
+
         jList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
                     System.out.println("double clicked");
-                    selectedTitle[0] = jList.getSelectedValue();
+
+                    Picture selectedPicture = getSelectedPicture(selectedPhotographer(combo.getSelectedIndex()).getId());
+                    selectedTitle[0] = selectedPicture.getFile();
                     System.out.println(selectedTitle[0]);
+
+                    icon = new ImageIcon(selectedTitle[0]);
+                    icon.setImage(icon.getImage().getScaledInstance(250, 150, Image.SCALE_DEFAULT));
+                    imageLabel.setIcon(icon);
+
+                    panel4.revalidate();
+                    panel4.repaint();
+
                 }
             }
         });
 
         panel4.add(imageLabel);
+
+
 
         datePicker = new JXDatePicker();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -161,6 +164,20 @@ public class Mile4 extends JFrame{
         return null;
     }
 
+    public Picture getSelectedPicture(int photographerId){
+        List<Picture> pictureList = db.pictureList();
+        Picture returnPicture;
+
+        for (Picture picture: pictureList){
+            if(picture.getPhotographerId() == photographerId){
+                returnPicture = picture;
+                return returnPicture;
+            }
+        }
+
+        return null;
+    }
+
     public String[] pictureNames(int selectedIndex){
         Photographer photographer = selectedPhotographer(selectedIndex);
 
@@ -195,6 +212,14 @@ public class Mile4 extends JFrame{
         }
 
         return picturePaths;
+    }
+
+    private class PictureRemoveListener extends MouseAdapter {
+        @Override public void mousePressed(MouseEvent e) {
+            if (e.getButton() == MouseEvent.BUTTON3) {
+                imageLabel.setIcon(null);
+            }
+        }
     }
 
 }
