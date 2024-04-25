@@ -56,7 +56,8 @@ public class Mile4 extends JFrame{
 ////////////JList Title////////////////////////////
 
         //Adding JList to panel3
-        panel3 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panel3 = new JPanel();
+        panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
 
         jList = new JList<>();
         jList.setPreferredSize(new Dimension(350, 200));
@@ -88,7 +89,7 @@ public class Mile4 extends JFrame{
 
 
         final String[] selectedTitle = {" "};
-
+        imageLabel = new JLabel();
 
         jList.addMouseListener(new MouseAdapter() {
             @Override
@@ -96,16 +97,13 @@ public class Mile4 extends JFrame{
                 if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
                     System.out.println("double clicked");
 
-                    imageLabel = new JLabel();
-                    imageLabel.addMouseListener(new PictureRemoveListener());
-
                     Picture selectedPicture = getSelectedPicture(selectedPhotographer(combo.getSelectedIndex()).getId());
                     selectedTitle[0] = selectedPicture.getFile();
                     System.out.println(selectedTitle[0]);
 
                     icon = new ImageIcon(selectedTitle[0]);
+                    icon.setImage(icon.getImage().getScaledInstance(250, 150, Image.SCALE_DEFAULT));
                     imageLabel.setIcon(icon);
-                    panel4.add(imageLabel);
 
                     panel4.revalidate();
                     panel4.repaint();
@@ -113,6 +111,8 @@ public class Mile4 extends JFrame{
                 }
             }
         });
+
+        panel4.add(imageLabel);
 
 
 
