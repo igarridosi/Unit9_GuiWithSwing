@@ -6,7 +6,9 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +26,15 @@ public class Mile4 extends JFrame{
         super("Photography");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setPreferredSize(new Dimension(900, 500));
+
+        //For closing the Database
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                db.finish();
+                System.out.println("DB connection closed");
+            }
+        });
 
         container = getContentPane();
         container.setLayout(new GridLayout(2,2));
@@ -60,7 +71,11 @@ public class Mile4 extends JFrame{
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
 
         jList = new JList<>();
-        jList.setPreferredSize(new Dimension(350, 200));
+
+        //Set a pictureNames list by default
+        String [] pictureNames = pictureNames(0);
+        jList.setListData(pictureNames);
+
 
         //Listener for changing the values of the jList
         combo.addActionListener(new ActionListener() {
@@ -91,15 +106,22 @@ public class Mile4 extends JFrame{
         final String[] selectedTitle = {" "};
         imageLabel = new JLabel();
 
+        //Set an image by default
+        icon = new ImageIcon("Mile4_Images/ansealdams1.jpg");
+        icon.setImage(icon.getImage().getScaledInstance(250, 150, Image.SCALE_DEFAULT));
+        imageLabel.setIcon(icon);
+
         jList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
-                    System.out.println("double clicked");
+                    //System.out.println("double clicked");
 
+                    //Calling a method for returning the Selected Picture
                     Picture selectedPicture = getSelectedPicture(selectedPhotographer(combo.getSelectedIndex()).getId());
+
                     selectedTitle[0] = selectedPicture.getFile();
-                    System.out.println(selectedTitle[0]);
+                    //System.out.println(selectedTitle[0]);
 
                     icon = new ImageIcon(selectedTitle[0]);
                     icon.setImage(icon.getImage().getScaledInstance(250, 150, Image.SCALE_DEFAULT));
@@ -117,7 +139,16 @@ public class Mile4 extends JFrame{
 
 
         datePicker = new JXDatePicker();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+        //Set a default date
+        try {
+            Date date = sdf.parse("27/02/2013");
+            datePicker.setDate(date);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
         panel2.add(datePicker);
 
 //////////////Add Panels/////////////////////////////
@@ -169,7 +200,7 @@ public class Mile4 extends JFrame{
         Picture returnPicture;
 
         for (Picture picture: pictureList){
-            if(picture.getPhotographerId() == photographerId){
+            if(picture.getPhotographerId() == photographerId && jList.getSelectedValue().equals(picture.getTitle())){
                 returnPicture = picture;
                 return returnPicture;
             }
@@ -212,14 +243,6 @@ public class Mile4 extends JFrame{
         }
 
         return picturePaths;
-    }
-
-    private class PictureRemoveListener extends MouseAdapter {
-        @Override public void mousePressed(MouseEvent e) {
-            if (e.getButton() == MouseEvent.BUTTON3) {
-                imageLabel.setIcon(null);
-            }
-        }
     }
 
 }

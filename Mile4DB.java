@@ -89,4 +89,15 @@ public class Mile4DB {
 
         return pictureList;
     }
+
+    public void finish(){
+        try {
+            if (conn != null){
+                conn.close();
+                System.out.println("Connection with the Database finished.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
