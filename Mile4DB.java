@@ -3,9 +3,9 @@ package Milestones;
 import org.jdesktop.swingx.JXDatePicker;
 
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
+import java.util.stream.Stream;
 
 public class Mile4DB {
     static final String SERVER_IP = "localhost";
@@ -88,6 +88,54 @@ public class Mile4DB {
         }
 
         return pictureList;
+    }
+
+    public Map<Integer, Integer> createVisitsMap(){
+        Map<Integer, Integer> visitsMap = new HashMap<>();
+
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM pictures");
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                int numVisits = rs.getInt("visits");
+                int photographerId = rs.getInt("photographerId");
+
+                if (visitsMap.containsKey(photographerId)){
+                    for (Map.Entry<Integer, Integer> entry: visitsMap.entrySet()){
+                        if (visitsMap.containsKey(photographerId)){
+                            visitsMap.put(photographerId, entry.getValue() + numVisits);
+                        }
+                    }
+                }
+                else {
+                    visitsMap.put(photographerId, numVisits);
+                }
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return visitsMap;
+    }
+
+    public void updatePhotographerAwarded(int photographerId){
+        try {
+            Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = stmt.executeQuery("SELECT * FROM photographers WHERE photographerId = "+photographerId);
+
+            while (rs.next()){
+                rs.updateInt("awarded", 1);
+            }
+            rs.updateRow();
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void finish(){

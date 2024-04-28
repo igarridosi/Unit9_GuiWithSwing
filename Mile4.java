@@ -11,15 +11,17 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class Mile4 extends JFrame{
     private Container container;
-    private JPanel panel1, panel2, panel3, panel4;
+    private JPanel panel1, panel2, panel3, panel4, headLeft, headRight;
     private JComboBox<String> combo;
     private JList<String> jList;
     private JScrollPane scroll1;
     private JLabel label1, label2, imageLabel;
     private ImageIcon icon;
+    private JButton award, remove;
     private JXDatePicker datePicker;
     private Mile4DB db = new Mile4DB();
     public Mile4(){
@@ -37,7 +39,7 @@ public class Mile4 extends JFrame{
         });
 
         container = getContentPane();
-        container.setLayout(new GridLayout(2,2));
+        container.setLayout(new GridLayout(3,2));
 
 //////////Combo Names//////////////////////////////////
 
@@ -151,13 +153,49 @@ public class Mile4 extends JFrame{
 
         panel2.add(datePicker);
 
+//////////////JButtons/////////////////////////////
+        award = new JButton("AWARD");
+        remove = new JButton("REMOVE");
+
+        headLeft = new JPanel(new BorderLayout());
+        headRight = new JPanel(new BorderLayout());
+
+        award.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                int minVisits = Integer.parseInt(JOptionPane.showInputDialog("Input the N. of Visits to the pictures must be marked as awarded"));
+
+                Map<Integer, Integer> visitsMap = db.createVisitsMap();
+                for (Map.Entry<Integer, Integer> entry : visitsMap.entrySet()){
+                    if (entry.getValue()>=minVisits){
+                        db.updatePhotographerAwarded(entry.getKey());
+                    }
+                }
+            }
+        });
+
+        headLeft.add(award, BorderLayout.CENTER);
+        headRight.add(remove, BorderLayout.CENTER);
+
+
+
+
 //////////////Add Panels/////////////////////////////
 
         //Adding panels to the container
+        container.add(headLeft);
+        container.add(headRight);
         container.add(panel1);
         container.add(panel2);
         container.add(panel3);
         container.add(panel4);
+
+        //Check the visitsMap
+        /*Map<Integer, Integer> visits = db.createVisitsMap();
+        for (Map.Entry<Integer, Integer> entry : visits.entrySet()){
+            System.out.println(entry.getKey() +" "+ entry.getValue());
+        }
+         */
 
         this.pack();
         this.setVisible(true);
