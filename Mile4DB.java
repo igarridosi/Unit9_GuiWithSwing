@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 public class Mile4DB {
     static final String SERVER_IP = "localhost";
-    static final String DB_NAME = "Mile4DB";
+    static final String DB_NAME = "Milestone4";
     static final String USER = "root";
     static final String PASSWORD = "root";
     static final String JDBC_DRIVER = "org.mariadb.jdbc.Driver";
