@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 public class Mile4DB {
     static final String SERVER_IP = "localhost";
-    static final String DB_NAME = "Milestone4";
+    static final String DB_NAME = "Mile4DB";
     static final String USER = "root";
     static final String PASSWORD = "root";
     static final String JDBC_DRIVER = "org.mariadb.jdbc.Driver";
@@ -124,14 +124,9 @@ public class Mile4DB {
 
     public void updatePhotographerAwarded(int photographerId){
         try {
-            Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ResultSet rs = stmt.executeQuery("SELECT * FROM photographers WHERE photographerId = "+photographerId);
-
-            while (rs.next()){
-                rs.updateInt("awarded", 1);
-            }
-            rs.updateRow();
-
+            PreparedStatement updateAwarded = conn.prepareStatement("UPDATE photographers SET awarded = 1 WHERE photographerId = ?");
+            updateAwarded.setInt(1, photographerId);
+            updateAwarded.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

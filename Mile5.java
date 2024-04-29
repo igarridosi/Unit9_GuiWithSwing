@@ -165,6 +165,8 @@ public class Mile5 extends JFrame{
 
                 Map<Integer, Integer> visitsMap = db.createVisitsMap();
                 for (Map.Entry<Integer, Integer> entry : visitsMap.entrySet()){
+                    //System.out.println(entry.getValue());
+                    //System.out.println(minVisits);
                     if (entry.getValue()>=minVisits){
                         db.updatePhotographerAwarded(entry.getKey());
                     }
@@ -188,12 +190,14 @@ public class Mile5 extends JFrame{
         container.add(panel3);
         container.add(panel4);
 
+        /*
         //Check the visitsMap
-        /*Map<Integer, Integer> visits = db.createVisitsMap();
+        Map<Integer, Integer> visits = db.createVisitsMap();
         for (Map.Entry<Integer, Integer> entry : visits.entrySet()){
             System.out.println(entry.getKey() +" "+ entry.getValue());
         }
          */
+
 
         this.pack();
         this.setVisible(true);
