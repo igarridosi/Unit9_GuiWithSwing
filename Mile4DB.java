@@ -133,6 +133,20 @@ public class Mile4DB {
         }
     }
 
+    public void deletePicture(String title){
+        try {
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM pictures WHERE title = ?");
+            ps.setString(1, title);
+            ps.executeUpdate();
+
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     public void finish(){
         try {
             if (conn != null){

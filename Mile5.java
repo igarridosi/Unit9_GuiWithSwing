@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ public class Mile5 extends JFrame{
     private ImageIcon icon;
     private JButton award, remove;
     private JXDatePicker datePicker;
+    private List<Picture> displayedImages;
     private Mile4DB db = new Mile4DB();
     public Mile5(){
         super("Photography");
@@ -111,6 +113,8 @@ public class Mile5 extends JFrame{
         icon.setImage(icon.getImage().getScaledInstance(250, 150, Image.SCALE_DEFAULT));
         imageLabel.setIcon(icon);
 
+        displayedImages = new ArrayList<>();
+
         jList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -126,6 +130,10 @@ public class Mile5 extends JFrame{
                     icon = new ImageIcon(selectedTitle[0]);
                     icon.setImage(icon.getImage().getScaledInstance(250, 150, Image.SCALE_DEFAULT));
                     imageLabel.setIcon(icon);
+
+                    //Mile5 method for adding all the displayed images
+                    //System.out.println(selectedPicture);
+                    displayedImages.add(selectedPicture);
 
                     panel4.revalidate();
                     panel4.repaint();
@@ -158,6 +166,7 @@ public class Mile5 extends JFrame{
         headLeft = new JPanel(new BorderLayout());
         headRight = new JPanel(new BorderLayout());
 
+        //THE METHODS OF THE DATABASE ARE IN THE 'Mile4DB' FILE ADDED
         award.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -169,6 +178,49 @@ public class Mile5 extends JFrame{
                     //System.out.println(minVisits);
                     if (entry.getValue()>=minVisits){
                         db.updatePhotographerAwarded(entry.getKey());
+                    }
+                }
+            }
+        });
+
+        remove.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                List<Picture> allPictures = db.pictureList();
+                List<Picture> noDisplayedImages = new ArrayList<>();
+
+
+                for (Picture picture : allPictures){
+                    boolean displayed = false;
+                    for (Picture displayedImage : displayedImages){
+                        //System.out.println(picture.getTitle()+"//////"+displayedImage.getTitle());
+                        //System.out.println("---------");
+                        if (picture.getTitle().equals(displayedImage.getTitle())){
+                            displayed = true;
+                        }
+                    }
+                    //System.out.println(displayed);
+
+                    List<Photographer> photographerList = db.photographerList();
+                    Photographer displayedPhotographer = null;
+
+                    for (Photographer photographer : photographerList){
+                        if (photographer.getId() == picture.getPhotographerId()){
+                            displayedPhotographer = photographer;
+                        }
+                    }
+
+                    //CHECK IF THE PHOTOGRAPHER OF THE NO DISPLAYED PICTURE IS NOT AWARDED
+                    if (!displayed && displayedPhotographer.getAwarded()==0){
+                        noDisplayedImages.add(picture);
+                    }
+                }
+
+                for(Picture picture : noDisplayedImages){
+                    int option = JOptionPane.showConfirmDialog(null,"Do you want to delete: "+picture.getTitle());
+                    if (option == 0){
+                        db.deletePicture(picture.getTitle());
+                        JOptionPane.showMessageDialog(null, picture.getTitle() + " was deleted correctly");
                     }
                 }
             }
