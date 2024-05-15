@@ -90,6 +90,19 @@ public class Mile4DB {
         return pictureList;
     }
 
+    public void updateVisits(int pictureId, int pictureVisits){
+        try {
+            PreparedStatement ps = conn.prepareStatement("UPDATE pictures SET visits = ? WHERE pictureId = ?");
+            ps.setInt(1, pictureVisits+1);
+            ps.setInt(2, pictureId);
+            ps.executeUpdate();
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public Map<Integer, Integer> createVisitsMap(){
         Map<Integer, Integer> visitsMap = new HashMap<>();
 
@@ -105,12 +118,23 @@ public class Mile4DB {
                     for (Map.Entry<Integer, Integer> entry: visitsMap.entrySet()){
                         if (visitsMap.containsKey(photographerId)){
                             visitsMap.put(photographerId, entry.getValue() + numVisits);
+                            /*
+                            System.out.println(photographerId);
+                            System.out.println(entry.getValue());
+                            System.out.println(numVisits);
+                            System.out.println();
+                            
+                             */
                         }
                     }
                 }
                 else {
                     visitsMap.put(photographerId, numVisits);
                 }
+            }
+
+            for (Map.Entry<Integer, Integer> entry : visitsMap.entrySet()){
+                System.out.println(entry.getKey() +" "+ entry.getValue());
             }
 
             rs.close();

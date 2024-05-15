@@ -78,8 +78,9 @@ public class Mile4 extends JFrame{
         String [] pictureNames = pictureNames(0);
         jList.setListData(pictureNames);
 
+        jList.addMouseListener(new MouseAdapter() {
+        });
 
-        //Listener for changing the values of the jList
         combo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -89,6 +90,9 @@ public class Mile4 extends JFrame{
 
             }
         });
+
+        //Listener for updating the value of visits
+
 
         //Adding the scroll bar to the JList
         scroll1 = new JScrollPane();
@@ -131,6 +135,10 @@ public class Mile4 extends JFrame{
 
                     panel4.revalidate();
                     panel4.repaint();
+
+                    //Listener for updating the values of the jList
+                    db.updateVisits(selectedPicture.getPictureId(), selectedPicture.getVisits());
+                    System.out.println(selectedPicture.getVisits());
 
                 }
             }
@@ -282,5 +290,4 @@ public class Mile4 extends JFrame{
 
         return picturePaths;
     }
-
 }
